@@ -1,5 +1,7 @@
 ﻿using System;
 
+using System;
+
 namespace RPC
 {
     class Program
@@ -11,6 +13,7 @@ namespace RPC
             Console.Title = "RPC V0.1";
             Console.WindowHeight = 45;
             Console.WindowWidth = 160;
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("----------------------------------------------------------------");
             Console.WriteLine("----------------------------------------------------------------");
             Console.WriteLine("RRRRRRRRRRRRRRRRR   PPPPPPPPPPPPPPPPP           CCCCCCCCCCCCC");
@@ -31,6 +34,7 @@ namespace RPC
             Console.WriteLine("RRRRRRRR     RRRRRRRPPPPPPPPPP                  CCCCCCCCCCCCC");
             Console.WriteLine("----------------------------------------------------------------");
             Console.WriteLine("----------------------------------------------------------------");
+            Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("Role Play... ¿Console?\n\n\n");
             Console.WriteLine("¿Que quieres hacer?");
             Console.WriteLine("\ta - Nueva partida");
@@ -67,16 +71,16 @@ namespace RPC
             switch (Console.ReadLine())
             {
                 case "a":
-                    VidaPersonaje = 50; FuerzaPersonaje = 0; DefensaPersonaje = 0; VelocidadPersonaje = 0;
+                    VidaPersonaje = 50; FuerzaPersonaje = 75; DefensaPersonaje = 25; VelocidadPersonaje = 50;
                     break;
                 case "b":
-                    VidaPersonaje = 50; FuerzaPersonaje = 0; DefensaPersonaje = 0; VelocidadPersonaje = 0;
+                    VidaPersonaje = 50; FuerzaPersonaje = 25; DefensaPersonaje = 75; VelocidadPersonaje = 50;
                     break;
                 case "c":
-                    VidaPersonaje = 50; FuerzaPersonaje = 0; DefensaPersonaje = 0; VelocidadPersonaje = 0;
+                    VidaPersonaje = 25; FuerzaPersonaje = 50; DefensaPersonaje = 50; VelocidadPersonaje = 75;
                     break;
                 case "d":
-                    VidaPersonaje = 50; FuerzaPersonaje = 0; DefensaPersonaje = 0; VelocidadPersonaje = 0;
+                    VidaPersonaje = 75; FuerzaPersonaje = 50; DefensaPersonaje = 50; VelocidadPersonaje = 25;
                     break;
             }
             Console.ReadLine();
