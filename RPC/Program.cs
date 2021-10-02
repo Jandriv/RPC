@@ -8,7 +8,7 @@ namespace RPC
         {
         Titulo:
             //Esta etiqueta me va a servir para que cuando pierdas el juego no se cierre, si no que vengas aqui
-            Console.Title = "RPC V0.2";
+            Console.Title = "RPC V0.5";
             Console.WindowHeight = 45;
             Console.WindowWidth = 160;
             Console.ForegroundColor = ConsoleColor.Cyan;
@@ -59,30 +59,30 @@ namespace RPC
             }
         Creditos:
             Console.WriteLine("No Disponible por el momento");
-            Console.ReadKey();
+            System.Threading.Thread.Sleep(800);
             Console.Clear();
             goto Titulo;
         Jugar:
-            int VidaPersonaje; int FuerzaPersonaje; int DefensaPersonaje; int VelocidadPersonaje; string ClasePersonaje = "Null";
+            int VidaPersonaje; int AtaquePersonaje; int DefensaPersonaje; int VelocidadPersonaje; string ClasePersonaje = "Null";
             Console.WriteLine("Nombre del personaje:");
             string NombrePersonaje = Console.ReadLine();
             Console.WriteLine("¿Y que de que clase es " + NombrePersonaje + "?\n\ta - Mago\n\tb - Caballero\n\tc - Cazador\n\td - Luchador");
             switch (Console.ReadLine())
             {
                 case "a":
-                    VidaPersonaje = 50; FuerzaPersonaje = 75; DefensaPersonaje = 25; VelocidadPersonaje = 50;
+                    VidaPersonaje = 50; AtaquePersonaje = 75; DefensaPersonaje = 25; VelocidadPersonaje = 20;
                     ClasePersonaje = "Mago";
                     break;
                 case "b":
-                    VidaPersonaje = 50; FuerzaPersonaje = 25; DefensaPersonaje = 75; VelocidadPersonaje = 50;
+                    VidaPersonaje = 50; AtaquePersonaje = 25; DefensaPersonaje = 75; VelocidadPersonaje = 20;
                     ClasePersonaje = "Caballero";
                     break;
                 case "c":
-                    VidaPersonaje = 25; FuerzaPersonaje = 50; DefensaPersonaje = 50; VelocidadPersonaje = 75;
+                    VidaPersonaje = 25; AtaquePersonaje = 50; DefensaPersonaje = 50; VelocidadPersonaje = 40;
                     ClasePersonaje = "Cazador";
                     break;
                 case "d":
-                    VidaPersonaje = 75; FuerzaPersonaje = 50; DefensaPersonaje = 50; VelocidadPersonaje = 25;
+                    VidaPersonaje = 75; AtaquePersonaje = 50; DefensaPersonaje = 50; VelocidadPersonaje = 10;
                     ClasePersonaje = "Luchador";
                     break;
                 default:
@@ -92,32 +92,126 @@ namespace RPC
             }
             int RNumero = RandomNumber(1, 1001);
             Console.Clear();
-            Console.WriteLine(NombrePersonaje + "el" + ClasePersonaje + " entra en la mazmorra buscando el tesoro que le aguarda en lo mas profundo.");
-            Console.ReadKey();
+            Console.WriteLine(NombrePersonaje + " el " + ClasePersonaje + " entra en la mazmorra buscando el tesoro que le aguarda en lo mas profundo.\n\n");
+            System.Threading.Thread.Sleep(2200);
 
 
         Combate:
             int VidaEnemigo; int AtaqueEnemigo; int VelocidadEnemigo; int DefensaEnemigo;
+            int VidaMinEnemigo; int AtaqueMinEnemigo; int VelocidadMinEnemigo;int DefensaMinEnemigo;
+            int VidaMaxEnemigo; int AtaqueMaxEnemigo; int VelocidadMaxEnemigo; int DefensaMaxEnemigo;
+            bool EnemigoRecarga; int Daño; int Vida;
             for (int i = 1; i < 51; i++)
             {
-                //Si el piso es multiplo de 5 entonces te encontraras una sala especial, tienda, cofre, sala trampa... Seguramente tenga que hacer el sistema de inventario prime
+                //Si el piso es multiplo de 5 entonces te encontraras una sala especial, tienda, cofre, sala trampa... Seguramente tenga que hacer el sistema de inventario primero
                 if (i % 5 == 0 && i != 50)
                 {
                     Console.WriteLine("Piso: " + i + "\n\n\n");
                     Console.WriteLine("Algo especial todavia sin decidir");
+                    goto FinDelPiso;
                 }
                 //Pelea de jefe, tras esta se acaba el juego 
                 else if (i == 50)
                 {
+                    VidaEnemigo = 0;
+                    AtaqueEnemigo = 0;
+                    VelocidadEnemigo = 0;
+                    DefensaEnemigo = 0;
                     Console.WriteLine("Llegas al final de la mazmorra y encuentras (x) jajajajaj todavia no se que va a ser el jefe");
-                    Console.WriteLine("Piso: " + i + "\n\n\n");
+                    
                 }
+                //Pelea default, estadisticas aumentan con cada piso
                 else
                 {
+                    VidaMinEnemigo = (50 + (i * 4)); VidaMaxEnemigo = (80 + (i * 4));
+                    AtaqueMinEnemigo = (20 + (i * 2)); AtaqueMaxEnemigo = (40 + (i * 2));
+                    VelocidadMinEnemigo = (1 + (i/2)); VelocidadMaxEnemigo = (3 + (i/2));
+                    DefensaMinEnemigo = (5 + (i)); DefensaMaxEnemigo = (10 + (i));
+
+                    VidaEnemigo = RandomNumber(VidaMinEnemigo, VidaMaxEnemigo);
+                    AtaqueEnemigo = RandomNumber(AtaqueMinEnemigo, AtaqueMaxEnemigo);
+                    VelocidadEnemigo = RandomNumber(VelocidadMinEnemigo, VelocidadMaxEnemigo);
+                    DefensaEnemigo = RandomNumber(DefensaMinEnemigo, DefensaMaxEnemigo);
+                }
+                while (VidaEnemigo >= 0 || VidaPersonaje >= 0)
+                {
+                    Console.Clear();
                     Console.WriteLine("Piso: " + i + "\n\n\n");
                     Console.WriteLine("¿Que quieres hacer?");
-                    Console.WriteLine("\n\ta - Luchar\n\tb - Caballero\n\tc - Cazador\n\td - Luchador");
+                    Console.WriteLine("\n\ta - Luchar\n\tb - Estadísticas\n\tc - Inventario\n\td - Huir");
+                    switch (Console.ReadLine())
+                    {
+                        case "a":
+                            Daño = 10;
+                            Console.WriteLine(NombrePersonaje + " atacó al enemigo");
+                            Daño = ((AtaquePersonaje * DefensaEnemigo * RandomNumber(15, 36)) / 1000);
+                            System.Threading.Thread.Sleep(1200);
+                            Console.WriteLine("El ataque hizo " + Daño + " puntos de daño");
+                            Vida = VidaEnemigo;
+                            VidaEnemigo = (Vida - (Daño));
+                            System.Threading.Thread.Sleep(1200);
+                            Console.WriteLine("¡El enemigo atacó de vuelta!");
+                            Vida = VidaPersonaje;
+                            Daño = ((AtaqueEnemigo * DefensaPersonaje * RandomNumber(10, 31)) / 1000);
+                            VidaPersonaje = (Vida - (Daño));
+                            System.Threading.Thread.Sleep(1200);
+                            Console.WriteLine("El ataque hizo " + Daño + " puntos de daño");
+                            Console.ReadKey();
+                            break;
+
+                        case "b":
+                            Console.Clear();
+                            Console.WriteLine("Estadísticas del enemigo ");
+                            Console.WriteLine("---------------------------------------");
+                            Console.WriteLine("Vida: " + VidaEnemigo);
+                            Console.WriteLine("Defensa: " + DefensaEnemigo);
+                            Console.WriteLine("Ataque: " + AtaqueEnemigo);
+                            Console.WriteLine("Velocidad: " + VelocidadEnemigo);
+                            Console.WriteLine("\n\nEstadísticas de " + NombrePersonaje);
+                            Console.WriteLine("---------------------------------------");
+                            Console.WriteLine("Vida:" + VidaPersonaje);
+                            Console.WriteLine("Ataque:" + AtaquePersonaje);
+                            Console.WriteLine("Defensa:" + DefensaPersonaje);
+                            Console.WriteLine("Velocidad:" + VelocidadPersonaje);
+                            Console.ReadKey();
+                            Console.Clear();
+                            break;
+
+                        case "c":
+                            Console.Clear();
+                            Console.WriteLine("En progreso");
+                            System.Threading.Thread.Sleep(800);
+                            Console.Clear();
+                            break;
+
+                        case "d":
+                            Console.Clear();
+                            Console.WriteLine("...");
+                            System.Threading.Thread.Sleep(800);
+                            Console.WriteLine("...");
+                            System.Threading.Thread.Sleep(800);
+                            Console.WriteLine("...");
+                            System.Threading.Thread.Sleep(800);
+                            if (RandomNumber(1, 101) <= (VelocidadPersonaje - VelocidadEnemigo))
+                            {
+                                Console.WriteLine("Huiste con éxito al siguiente piso");
+                                System.Threading.Thread.Sleep(1500);
+                                goto FinDelPiso;
+                            }
+                            else
+                            {
+                                Console.WriteLine("No conseguiste huir");
+                                System.Threading.Thread.Sleep(1000);
+                                Console.WriteLine("¡El enemigo atacó!");
+                                System.Threading.Thread.Sleep(1000);
+
+
+                            }
+                            break;
+                    }
                 }
+
+            FinDelPiso:;
             }
 
 
