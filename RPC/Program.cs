@@ -200,6 +200,7 @@ namespace RPC
                             Vida = VidaPersonaje;
                             VidaPersonaje = (Vida - (Daño));
                             Console.WriteLine("Bloqueaste el ataque y recibiste " + Daño + " puntos de daño");
+                            Console.WriteLine("El enemigo tiene que recargar su próximo ataque");
                             System.Threading.Thread.Sleep(1200);
                             break;
                         case "c":
