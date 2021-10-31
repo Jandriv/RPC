@@ -8,7 +8,7 @@ namespace RPC
         {
         Titulo:
             //Esta etiqueta me va a servir para que cuando pierdas el juego no se cierre, si no que vengas aqui
-            Console.Title = "RPC V0.5";
+            Console.Title = "RPC V0.62";
             Console.WindowHeight = 45;
             Console.WindowWidth = 160;
             Console.ForegroundColor = ConsoleColor.Cyan;
